@@ -3,7 +3,7 @@
     export let data: PageData;
 </script>
 
-<div class="grid grid-cols-2 m-16">
+<div class="grid grid-cols-1 lg:grid-cols-2 m-16">
     <div class="col-start-1">
         <form action="/" method="POST" class="flex flex-col gap-4">
             <input type="text" placeholder="Name" name="name" class="input input-bordered w-full max-w-xs" />
@@ -13,16 +13,18 @@
         </form>
     </div>
 
-    <div class="col-start-2">
+    <div class="col-start-1 mt-6 lg:mt-0 lg:col-start-2">
         {#if data}
             {#if data.status==200}
                 <div class="flex flex-col gap-4">
                     {#each data.allUsers as user}
-                        <div>
-                            <h3 class="font-semibold">{user.name}</h3>
+                        <div class="card w-full bg-base-100 shadow-xl">
+                            <div class="card-body">
+                            <h2 class="card-title">{user.name}</h2>
                             <p>Product: {user.product}</p>
                             <p>Link: {user.link}</p>
                             <p>City: {user.city}</p>
+                            </div>
                         </div>
                     {/each}
                 </div>

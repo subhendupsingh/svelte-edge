@@ -1,5 +1,5 @@
 {
     "out": "./migrations", 
     "schema": "src/lib/schemas/users.ts", 
-    "connectionString":"mysql://iyz353bu12xx48pu7nnt:pscale_pw_kZomBLa42n2pmfKoCGO0WKCFwTx2IWYHxpA6Hlv4trn@ap-south.connect.psdb.cloud/qroyo?ssl={\"rejectUnauthorized\":true}"
+    "connectionString":"YOU_MYSQL_CONNECTION_STRING_HERE"
 }
