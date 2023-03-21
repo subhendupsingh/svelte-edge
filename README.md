@@ -1,6 +1,42 @@
-# create-svelte
+# A Drizzle ORM + Sveltekit + Planetscale + Typescript starter
+1. [Drizzle ORM](https://github.com/drizzle-team/drizzle-orm)
+2. [Sveltekit](https://kit.svelte.dev/)
+3. [Planetscale](https://planetscale.com/)
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+### Commands
+1. **To create migration**
+
+```npx drizzle-kit generate:mysql --out migrations-folder --schema src/lib/db/schema.ts```
+
+[Docs](https://github.com/drizzle-team/drizzle-orm/blob/main/drizzle-orm/src/mysql-core/README.md#automatic-sql-migrations-generation-with-drizzle-kit)
+
+2. **Create drizzle.config.json** at the root of the project
+
+```
+{
+  // path to introspect output
+  "out": "./migrations", // needed only for introspect
+  // path to schema file (or several schema files)
+  "schema": "./db", 
+  // you could specify array for several schema files
+  // "schema": ["./db", "./core-db", "./core/**/*.ts"],
+  "connectionString": "mysql://root:password@127.0.0.1:3306/my_db"
+}
+```
+[Docs](https://github.com/drizzle-team/drizzle-orm/blob/db-push-docs/docs/db-push.preview.md)
+
+3. **To push to the db**
+
+```npx drizzle-kit push:mysql```
+
+[Docs](https://github.com/drizzle-team/drizzle-orm/blob/db-push-docs/docs/db-push.preview.md)
+
+### Note:
+
+1. DB push is currently in preview and only works for mysql (Planetscale is mysql)
+2. There is bug in Drizzle ORM with planestcale serverless driver that prevents the sveltekit app from building. This has been fixed in the beta branch so use the beta branch of drizzle ORM [Link to discord discussion](https://discord.com/channels/1043890932593987624/1083890278466846802)
+
+```npm install drizzle-orm@beta```
 
 ## Creating a project
 
