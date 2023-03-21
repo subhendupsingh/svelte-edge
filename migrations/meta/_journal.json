@@ -1,0 +1,27 @@
+{
+  "version": "5",
+  "dialect": "mysql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1679393475609,
+      "tag": "0000_small_mandarin",
+      "breakpoints": false
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1679393978593,
+      "tag": "0001_mean_wiccan",
+      "breakpoints": false
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1679394008874,
+      "tag": "0002_tranquil_wonder_man",
+      "breakpoints": false
+    }
+  ]
+}

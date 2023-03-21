@@ -1,38 +1,48 @@
-import type { PageServerLoad } from './$types';
+import type { PageServerLoad, Actions } from './$types';
 import { db } from '$lib/db';
-//import type { InferModel } from 'drizzle-orm/mysql-core';
+import type { InferModel } from 'drizzle-orm/mysql-core';
+import { users } from '$lib/schemas/users';
 
-//type User = InferModel<typeof users>;
+type User = InferModel<typeof users, 'insert'>;
 
-export const load = (async () => {
-   /*  const newUser: User = {
-        id: 1,
-        fullName: 'Andrew',
-        phone: "9999",
-    }; */
-
-    //db.insert(users).values(newUser);
-    //db.select().from(users);
-    const { id } = await db
-    .insertInto('person')
-    .values({ first_name: 'Jennifer', gender: 'female' })
-    .returning('id')
-    .executeTakeFirstOrThrow()
-
-  await db
-    .insertInto('pet')
-    .values({ name: 'Catto', species: 'cat', owner_id: id })
-    .execute()
-
-  const person = await db
-    .selectFrom('person')
-    .innerJoin('pet', 'pet.owner_id', 'person.id')
-    .select(['first_name', 'pet.name as pet_name'])
-    .where('person.id', '=', id)
-    .executeTakeFirst()
-
-  if (person) {
-    person.pet_name
-  }
-    return {};
+export const load = (async ({ cookies }) => {
+  const allUsers = await db.select().from(users);
+  return {
+    status: 200,
+    message: "done",
+    allUsers: allUsers
+  };
 }) satisfies PageServerLoad;
+
+export const actions: Actions = {
+  default: async (event) => {
+    const formData = await event.request.formData();
+    const name = formData.get("name")?.toString();
+    const product = formData.get("product")?.toString();
+    const link = formData.get("link")?.toString();
+
+    if(!name || !product || !link){
+      return {
+        status: 400,
+        message: "All fields are mandatory"
+      };
+    }
+
+    const city = decodeURIComponent(event.request.headers.get('x-vercel-ip-city') ?? 'unknown');
+    
+    const newUser: User = {
+      link: link,
+      name: name,
+      product: product,
+      city: city
+    };
+
+    await db.insert(users).values(newUser);
+    //const allUsers = await db.select().from(users);
+    
+    return {
+      status: 200,
+      message: "done",
+    };
+  }
+};
